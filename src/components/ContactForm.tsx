@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { config } from '../config';
 
 const ContactForm: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -23,7 +24,7 @@ const ContactForm: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
+      const response = await fetch(`${config.apiUrl}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -35,6 +36,7 @@ const ContactForm: React.FC = () => {
       setIsSubmitted(true);
     } catch (err: any) {
       setError(err.message || 'Failed to send message.');
+      console.error('API Error:', err);
     } finally {
       setLoading(false);
     }
